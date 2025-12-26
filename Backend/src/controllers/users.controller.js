@@ -80,24 +80,65 @@ exports.updateUser = async (req, res) => {
   const { userId } = req.params;
   const { fullName, role, isActive } = req.body;
   const tenantId = req.tenantId;
+  const requester = req.user;
+
+  // Prevent tenant_admin from deactivating himself
+  if (
+    requester.role === "tenant_admin" &&
+    requester.userId === userId &&
+    isActive === false
+  ) {
+    return res.status(403).json({
+      success: false,
+      message: "You cannot deactivate your own account",
+    });
+  }
+
+  // Self-update restrictions (non-tenant_admin)
+  if (requester.role !== "tenant_admin") {
+    if (requester.userId !== userId) {
+      return res.status(403).json({
+        success: false,
+        message: "Forbidden",
+      });
+    }
+
+    if (role !== undefined || isActive !== undefined) {
+      return res.status(403).json({
+        success: false,
+        message: "You can only update your name",
+      });
+    }
+  }
 
   const result = await pool.query(
-    `UPDATE users
-     SET full_name = COALESCE($1, full_name),
-         role = COALESCE($2, role),
-         is_active = COALESCE($3, is_active),
-         updated_at = CURRENT_TIMESTAMP
-     WHERE id = $4 AND tenant_id = $5
-     RETURNING id, email, full_name, role, is_active`,
+    `
+    UPDATE users
+    SET
+      full_name = COALESCE($1, full_name),
+      role = COALESCE($2, role),
+      is_active = COALESCE($3, is_active),
+      updated_at = CURRENT_TIMESTAMP
+    WHERE id = $4 AND tenant_id = $5
+    RETURNING id, email, full_name, role, is_active, updated_at
+    `,
     [fullName, role, isActive, userId, tenantId]
   );
 
   if (result.rows.length === 0) {
-    return res.status(404).json({ success: false, message: "User not found" });
+    return res.status(404).json({
+      success: false,
+      message: "User not found",
+    });
   }
 
-  res.json({ success: true, data: result.rows[0] });
+  res.json({
+    success: true,
+    message: "User updated successfully",
+    data: result.rows[0],
+  });
 };
+
 
 /**
  * DEACTIVATE USER

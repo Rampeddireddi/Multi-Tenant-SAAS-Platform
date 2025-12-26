@@ -6,7 +6,6 @@ const authorizeRoles = require("../middleware/rbac.middleware");
 const enforceTenant = require("../middleware/tenant.middleware");
 
 const {
-  createTask,
   listTasks,
   updateTask,
 } = require("../controllers/tasks.controller");
@@ -14,11 +13,10 @@ const {
 // All task routes require auth + tenant
 router.use(authenticate, enforceTenant);
 
-// Only tenant admin can create/update
-router.post("/", authorizeRoles("tenant_admin"), createTask);
-router.put("/:taskId", authorizeRoles("tenant_admin"), updateTask);
-
-// Users + admins can view
+// Users + admins can view tasks
 router.get("/", listTasks);
+
+// Only tenant admin can update task
+router.put("/:taskId", authorizeRoles("tenant_admin"), updateTask);
 
 module.exports = router;

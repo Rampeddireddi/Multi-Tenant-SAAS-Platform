@@ -1,0 +1,51 @@
+{
+  "projectName": "Multi-Tenant SaaS Platform",
+  "description": "A Dockerized multi-tenant SaaS application with role-based access control, PostgreSQL, and React frontend.",
+  "techStack": {
+    "backend": ["Node.js", "Express.js"],
+    "frontend": ["React.js", "Vite", "Tailwind CSS"],
+    "database": "PostgreSQL",
+    "containerization": "Docker & Docker Compose",
+    "authentication": "JWT",
+    "authorization": "Role-Based Access Control (RBAC)"
+  },
+  "testCredentials": {
+    "superAdmin": {
+      "email": "superadmin@system.com",
+      "password": "Admin@123",
+      "role": "super_admin",
+      "tenant": null
+    },
+    "tenantAdmin": {
+      "email": "admin@testalpha.com",
+      "password": "Admin@123",
+      "role": "tenant_admin",
+      "tenant": {
+        "name": "Test Company Alpha",
+        "subdomain": "testalpha"
+      }
+    },
+    "regularUser": {
+      "email": "user@testalpha.com",
+      "password": "User@123",
+      "role": "user",
+      "tenant": {
+        "name": "Test Company Alpha",
+        "subdomain": "testalpha"
+      }
+    }
+  },
+  "startupInstructions": {
+    "steps": [
+      "docker-compose down -v",
+      "docker-compose up -d --build",
+      "Wait for backend and database services to become healthy",
+      "Access frontend at http://localhost:5173",
+      "Access backend API at http://localhost:5000"
+    ]
+  },
+  "healthCheck": {
+    "endpoint": "/api/protected/health",
+    "method": "GET"
+  }
+}

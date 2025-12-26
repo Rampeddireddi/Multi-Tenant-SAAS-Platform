@@ -8,7 +8,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Tenants from "./pages/Tenants";
 import ProtectedRoute from "./components/ProtectedRoute";
-
+import TenantSettings from "./pages/TenantSettings";
 
 import Navbar from "./components/Navbar";
 
@@ -52,9 +52,18 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+          <Route
+  path="/settings"
+  element={
+    <ProtectedRoute roles={["tenant_admin"]}>
+      <TenantSettings />
+    </ProtectedRoute>
+  }
+/>
         {/* <Route path="/users" element={<Users />} />
         <Route path="/tasks" element={<Tasks />} /> */}
       </Routes>
+    
     </BrowserRouter>
     </div>
   );

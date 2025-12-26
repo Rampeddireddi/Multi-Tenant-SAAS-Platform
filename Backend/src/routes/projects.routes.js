@@ -4,6 +4,8 @@ const router = express.Router();
 const authenticate = require("../middleware/auth.middleware");
 const authorizeRoles = require("../middleware/rbac.middleware");
 const enforceTenant = require("../middleware/tenant.middleware");
+const { createTask } = require("../controllers/tasks.controller");
+
 
 const {
   createProject,
@@ -59,5 +61,19 @@ router.delete(
   enforceTenant,
   archiveProject
 );
+
+/**
+ * CREATE TASK UNDER PROJECT
+ * tenant_admin only
+ * POST /api/projects/:projectId/tasks
+ */
+router.post(
+  "/:projectId/tasks",
+  authenticate,
+  authorizeRoles("tenant_admin"),
+  enforceTenant,
+  createTask
+);
+
 
 module.exports = router;

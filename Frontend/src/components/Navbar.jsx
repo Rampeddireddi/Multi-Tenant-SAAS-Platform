@@ -25,6 +25,10 @@ console.log(user.role);
           
         </>
       )}
+      {user.role === "tenant_admin" && (
+  <a href="/settings">Organization</a>
+)}
+
 
       <button onClick={logout} className="ml-auto">
         Logout
