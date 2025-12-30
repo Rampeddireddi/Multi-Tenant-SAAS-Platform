@@ -34,5 +34,15 @@ services:
       database:
         condition: service_healthy
 
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: http://localhost:5000/api
+    restart: always
 volumes:
   db_data:
