@@ -12,7 +12,15 @@ export const isAuthenticated = () => {
   return !!localStorage.getItem("token");
 };
 
-export const logout = () => {
-  localStorage.clear();
-  window.location.href = "/";
+export const logout = async () => {
+  try {
+    await api.post("/auth/logout");
+  } catch {
+    // ignore errors — logout must always succeed
+  } finally {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  }
 };
+
+

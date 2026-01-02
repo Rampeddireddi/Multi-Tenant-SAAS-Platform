@@ -19,13 +19,15 @@ export default function Users() {
   const [form, setForm] = useState({});
 
   const loadUsers = async () => {
-    try {
-      const res = await api.get("/users");
-      setUsers(res.data.data);
-    } catch {
-      toast.error("Failed to load users");
-    }
-  };
+  try {
+    const res = await api.get(
+      `/tenants/${currentUser.tenantId}/users`
+    );
+    setUsers(res.data.data);
+  } catch {
+    toast.error("Failed to load users");
+  }
+};
 
   useEffect(() => {
     loadUsers();
@@ -40,12 +42,15 @@ export default function Users() {
     }
 
     try {
-      await api.post("/users", {
-        email,
-        password,
-        fullName,
-        role: "user",
-      });
+     await api.post(
+  `/tenants/${currentUser.tenantId}/users`,
+  {
+    email,
+    password,
+    fullName,
+    role: "user",
+  }
+);
 
       setEmail("");
       setPassword("");

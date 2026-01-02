@@ -19,4 +19,5 @@ router.get("/", listTasks);
 // Only tenant admin can update task
 router.put("/:taskId", authorizeRoles("tenant_admin"), updateTask);
 
+router.patch("/:taskId", authorizeRoles("tenant_admin"), updateTask);
 module.exports = router;

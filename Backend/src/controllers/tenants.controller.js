@@ -140,3 +140,91 @@ exports.getMyTenant = async (req, res) => {
   });
 };
 
+
+
+/**
+ * GET TENANT BY ID WITH STATS
+ */
+exports.getTenantById = async (req, res) => {
+  const { tenantId } = req.params;
+  const user = req.user;
+
+  try {
+    // 🔐 Authorization check
+    if (
+      user.role !== "super_admin" &&
+      user.tenantId !== tenantId
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized access",
+      });
+    }
+
+    // 1️⃣ Fetch tenant
+    const tenantResult = await pool.query(
+      `
+      SELECT
+        id,
+        name,
+        subdomain,
+        status,
+        subscription_plan AS "subscriptionPlan",
+        max_users AS "maxUsers",
+        max_projects AS "maxProjects",
+        created_at AS "createdAt"
+      FROM tenants
+      WHERE id = $1
+      `,
+      [tenantId]
+    );
+
+    if (tenantResult.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Tenant not found",
+      });
+    }
+
+    // 2️⃣ Stats
+    const [usersCount, projectsCount, tasksCount] =
+      await Promise.all([
+        pool.query(
+          "SELECT COUNT(*) FROM users WHERE tenant_id = $1",
+          [tenantId]
+        ),
+        pool.query(
+          "SELECT COUNT(*) FROM projects WHERE tenant_id = $1",
+          [tenantId]
+        ),
+        pool.query(
+          `
+          SELECT COUNT(*)
+          FROM tasks
+          WHERE tenant_id = $1
+          `,
+          [tenantId]
+        ),
+      ]);
+
+    const tenant = tenantResult.rows[0];
+
+    res.json({
+      success: true,
+      data: {
+        ...tenant,
+        stats: {
+          totalUsers: Number(usersCount.rows[0].count),
+          totalProjects: Number(projectsCount.rows[0].count),
+          totalTasks: Number(tasksCount.rows[0].count),
+        },
+      },
+    });
+  } catch (err) {
+    console.error("Get tenant by ID error:", err);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch tenant details",
+    });
+  }
+};

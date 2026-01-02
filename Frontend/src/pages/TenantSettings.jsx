@@ -13,7 +13,7 @@ export default function TenantSettings() {
 
   const loadTenant = async () => {
     try {
-      const res = await api.get("/tenants/me");
+      const res = await api.get("/auth/me");
       setTenant(res.data.data);
       setName(res.data.data.name);
     } catch {
