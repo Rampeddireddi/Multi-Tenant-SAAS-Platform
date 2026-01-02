@@ -27,7 +27,7 @@
     },
     "regularUser": {
       "email": "user@testalpha.com",
-      "password": "User@123",
+      "password": "Admin@123",
       "role": "user",
       "tenant": {
         "name": "Test Company Alpha",
