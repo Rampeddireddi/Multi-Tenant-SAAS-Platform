@@ -26,7 +26,7 @@ Per the submission requirements, this application is fully dockerized and requir
 ### Installation & Execution
 1.  **Clone the Repository**
     ```bash
-    git clone <your-repo-url>
+    git clone https://github.com/Rampeddireddi/Multi-Tenant-SAAS-Platform.git
     cd multi-tenant-saas
     ```
 
