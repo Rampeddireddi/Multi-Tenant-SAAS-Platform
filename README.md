@@ -69,7 +69,7 @@ The system automatically loads the following accounts on startup. Use these to t
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 Detailed documentation regarding the design and architecture of this system can be found in the `docs/` folder:
 
