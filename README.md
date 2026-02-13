@@ -98,7 +98,7 @@ The application follows a **3-Tier Architecture** wrapped in Docker containers:
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 multi-tenant-saas/
