@@ -43,7 +43,7 @@ Per the submission requirements, this application is fully dockerized and requir
 
 ---
 
-## 🔑 Test Credentials (Seed Data)
+## Seed Data
 
 The system automatically loads the following accounts on startup. Use these to test different roles.
 
