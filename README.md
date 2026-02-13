@@ -127,8 +127,9 @@ Rebuild only the frontend
 docker-compose up -d --build frontend
 ```
 Stop all services and remove volumes (Reset Database)
+```
 docker-compose down -v
-
+```
 
 ## Error Handling
 
