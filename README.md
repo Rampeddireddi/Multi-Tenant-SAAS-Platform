@@ -1,29 +1,8 @@
-# Multi-Tenant SaaS Platform
+# Multi-Tenant SaaS Project Management System
 
-A role-based, multi-tenant SaaS application built with Node.js, Express, PostgreSQL, React, and Docker.  
-The platform supports system-level administration, tenant-level management, and tenant users with strict role-based access control and tenant isolation.
+A fully containerized, production-ready Multi-Tenant SaaS application built with **Node.js**, **React**, and **PostgreSQL**. This system features strict data isolation, Role-Based Access Control (RBAC), and a responsive dashboard for managing projects and tasks.
 
-This project demonstrates real-world SaaS architecture, RBAC, and containerized development workflows.
 
----
-
-## Table of Contents
-
-- Overview  
-- Features  
-- Roles & Access Control  
-- Tech Stack  
-- Architecture Overview  
-- Project Structure  
-- Environment Variables  
-- Running the Project (Docker)  
-- Database Migrations & Seeds  
-- UI Flow  
-- Error Handling  
-- Design Decisions  
-- Future Improvements  
-
----
 
 ## Overview
 
@@ -36,307 +15,118 @@ This application implements a **multi-tenant SaaS architecture**, where:
 
 All data is strictly isolated by tenant.
 
----
+## 🚀 Quick Start (One-Command Deployment)
 
-## Features
-
-- JWT-based authentication  
-- Role-based access control (RBAC)  
-- Tenant isolation at database and API level  
-- Subscription plan limits (users, projects)  
-- Project and task management  
-- Read-only tenant plans  
-- Protected frontend routes  
-- Centralized error handling with toast notifications  
-- Fully Dockerized backend, frontend, and database  
-
----
-
-## Roles & Access Control
-
-### Super Admin
-- Login  
-- View tenants  
-- View subscription plan and limits (read-only)  
-- No access to tenant data (projects, users, tasks)  
-
-### Tenant Admin
-- Login  
-- View dashboard (projects & users count)  
-- Create and manage projects  
-- Create and manage tasks inside projects  
-- Create and manage users (within limits)  
-
-### User
-- Login  
-- View dashboard (projects count)  
-- View projects  
-- View project details (tasks)  
-- Read-only access  
-
----
-
-## Tech Stack
-
-### Backend
-- Node.js  
-- Express.js  
-- PostgreSQL  
-- JWT (authentication)  
-- Docker  
-
-### Frontend
-- React (Vite)  
-- React Router  
-- Axios  
-- Tailwind CSS  
-- React Toastify  
-
-### DevOps
-- Docker  
-- Docker Compose  
-
----
-
-## Architecture Overview
-
-# Multi-Tenant SaaS Platform
-
-A role-based, multi-tenant SaaS application built with Node.js, Express, PostgreSQL, React, and Docker.  
-The platform supports system-level administration, tenant-level management, and tenant users with strict role-based access control and tenant isolation.
-
-This project demonstrates real-world SaaS architecture, RBAC, and containerized development workflows.
-
----
-
-## Table of Contents
-
-- Overview  
-- Features  
-- Roles & Access Control  
-- Tech Stack  
-- Architecture Overview  
-- Project Structure  
-- Environment Variables  
-- Running the Project (Docker)  
-- Database Migrations & Seeds  
-- UI Flow  
-- Error Handling  
-- Design Decisions  
-- Future Improvements  
-
----
-
-## Overview
-
-This application implements a **multi-tenant SaaS architecture**, where:
-
-- A **Super Admin** manages tenants (organizations)
-- Each **Tenant** has its own users, projects, and tasks
-- **Tenant Admins** manage users and projects inside their tenant
-- **Users** can view projects and project details (tasks)
-
-All data is strictly isolated by tenant.
-
----
-
-## Features
-
-- JWT-based authentication  
-- Role-based access control (RBAC)  
-- Tenant isolation at database and API level  
-- Subscription plan limits (users, projects)  
-- Project and task management  
-- Read-only tenant plans  
-- Protected frontend routes  
-- Centralized error handling with toast notifications  
-- Fully Dockerized backend, frontend, and database  
-
----
-
-## Roles & Access Control
-
-### Super Admin
-- Login  
-- View tenants  
-- View subscription plan and limits (read-only)  
-- No access to tenant data (projects, users, tasks)  
-
-### Tenant Admin
-- Login  
-- View dashboard (projects & users count)  
-- Create and manage projects  
-- Create and manage tasks inside projects  
-- Create and manage users (within limits)  
-
-### User
-- Login  
-- View dashboard (projects count)  
-- View projects  
-- View project details (tasks)  
-- Read-only access  
-
----
-
-## Tech Stack
-
-### Backend
-- Node.js  
-- Express.js  
-- PostgreSQL  
-- JWT (authentication)  
-- Docker  
-
-### Frontend
-- React (Vite)  
-- React Router  
-- Axios  
-- Tailwind CSS  
-- React Toastify  
-
-### DevOps
-- Docker  
-- Docker Compose  
-
----
-
-## Architecture Overview
-
-Client (React)
-    |
-    v
-   JWT
-    |
-    v
-API Gateway (Express)
-    |
-    v
-Tenant & Role Enforcement
-    |
-    v
-PostgreSQL (Tenant-isolated data)
-
-- Authentication middleware extracts user identity from JWT  
-- RBAC middleware enforces role permissions  
-- Tenant middleware enforces tenant isolation  
-- Frontend protected routes prevent unauthorized navigation  
-
----
-
-## Project Structure
-
-### Backend
-
-├── src/
-│ ├── app.js
-│ ├── server.js
-│ ├── config/
-│ │ └── db.js
-│ ├── controllers/
-│ ├── routes/
-│ ├── middleware/
-│ ├── migrations/
-│ ├── seeds/
-│ └── utils/
-├── Dockerfile
-└── package.json
-
-### Frontend
-frontend/
-├── src/
-│ ├── api/
-│ ├── auth/
-│ ├── components/
-│ ├── pages/
-│ ├── utils/
-│ ├── App.jsx
-│ └── main.jsx
-├── Dockerfile
-└── package.json
-
-
----
-
-## Environment Variables
-
-### Backend (`.env`)
-
-
----
-
-## Environment Variables
-
-### Backend (`.env`)
-
-
-### Frontend (`.env`)
-
-
----
-
-## Running the Project (Docker)
+Per the submission requirements, this application is fully dockerized and requires **Docker Desktop** to run.
 
 ### Prerequisites
-- Docker  
-- Docker Compose  
+* **Docker Desktop** (running)
+* **Git**
 
-### Build and Run
+### Installation & Execution
+1.  **Clone the Repository**
+    ```bash
+    git clone <your-repo-url>
+    cd multi-tenant-saas
+    ```
 
+2.  **Run the Application**
+    Execute the following command in the root directory. This will build the containers, initialize the database, run migrations, and seed default data automatically.
+    ```bash
+    docker-compose up -d
+    ```
 
----
-
-## Running the Project (Docker)
-
-### Prerequisites
-- Docker  
-- Docker Compose  
-
-### Build and Run
-
-docker-compose up -d --build
-
-
-### Stop Containers
-docker-compose down
-
-### view logs
-docker-compose logs backend
-docker-compose logs frontend
-
+3.  **Access the Application**
+    * **Frontend (UI):** [http://localhost:3000](http://localhost:3000)
+    * **Backend API:** [http://localhost:5000](http://localhost:5000)
+    * **Health Check:** [http://localhost:5000/api/health](http://localhost:5000/api/health)
 
 ---
 
-## Database Migrations & Seeds
+## 🔑 Test Credentials (Seed Data)
 
-- Migrations run automatically on container startup  
-- Seed data initializes:
-  - Super Admin account  
-  - Sample tenant  
-  - Tenant Admin user  
+The system automatically loads the following accounts on startup. Use these to test different roles.
 
-This ensures the application is usable immediately after startup.
+### 1. Super Admin (System Owner)
+* **Login URL:** [http://localhost:3000/login](http://localhost:3000/login) (Leave "Organization Subdomain" empty)
+* **Email:** `superadmin@system.com`
+* **Password:** `Admin@123`
+* **Access:** View all tenants, manage system settings.
+
+### 2. Tenant Admin (Organization Manager)
+* **Login URL:** [http://localhost:3000/login](http://localhost:3000/login)
+* **Subdomain:** `demo`
+* **Email:** `admin@demo.com`
+* **Password:** `Demo@123`
+* **Access:** Manage projects, tasks, and users within the "Demo Company".
+
+### 3. Regular User (Employee)
+* **Login URL:** [http://localhost:3000/login](http://localhost:3000/login)
+* **Subdomain:** `demo`
+* **Email:** `user1@demo.com`
+* **Password:** `User@123`
+* **Access:** View assigned tasks, view projects.
+
+---
+
+## 📚 Documentation
+
+Detailed documentation regarding the design and architecture of this system can be found in the `docs/` folder:
+
+* **[Research & Analysis](docs/research.md):** Technology stack justification, multi-tenancy analysis, and security considerations.
+* **[Product Requirements (PRD)](docs/PRD.md):** User personas, functional/non-functional requirements.
+* **[System Architecture](docs/architecture.md):** High-level system design, database ERD, and component breakdown.
+* **[Technical Specification](docs/technical-spec.md):** Detailed folder structure, development setup, and testing guide.
+* **[API Documentation](docs/api.md):** Full list of the 19 RESTful API endpoints.
 
 ---
 
-## UI Flow
+## 🏗 System Architecture
 
-### Super Admin
+The application follows a **3-Tier Architecture** wrapped in Docker containers:
 
-Login → Tenants Dashboard
+1.  **Frontend:** React.js (SPA) with Tailwind CSS.
+2.  **Backend:** Node.js / Express.js REST API.
+3.  **Database:** PostgreSQL (v15) with `pgcrypto` for password hashing.
 
-### Tenant Admin
-
-Login → Dashboard → Projects → Project Details (Tasks) → Users
-
-
-### User
-
-Login → Dashboard → Projects → Project Details (Tasks)
-
-
-Tasks are part of **Project Details**, not a standalone module.
+### Key Features
+* **Multi-Tenancy:** Row-level isolation using `tenant_id`.
+* **Authentication:** JWT-based stateless authentication.
+* **RBAC:** Granular permissions for Super Admins, Tenant Admins, and Users.
+* **Audit Logging:** Tracks critical actions (Create User, Delete Project) for security.
+* **Mobile Friendly:** Responsive dashboard with sidebar navigation.
 
 ---
+
+## 📂 Project Structure
+
+```
+multi-tenant-saas/
+├── docker-compose.yml       # Orchestration for DB, Backend, Frontend
+├── submission.json          # Credentials for automated evaluation
+├── backend/                 # Node.js API
+│   ├── src/controllers/     # Business Logic
+│   ├── src/routes/          # API Endpoints
+│   ├── migrations/          # SQL Schema definitions
+│   └── seeds/               # Initial Data (SQL)
+├── frontend/                # React Application
+│   ├── src/pages/           # Dashboard, Login, Projects
+│   └── src/components/      # Reusable UI (Layout, Navbar)
+└── docs/                    # Architectural & Research documentation
+```
+
+## Development Commands
+If you need to rebuild the containers after making code changes:
+
+Rebuild only the backend
+docker-compose up -d --build backend
+
+Rebuild only the frontend
+docker-compose up -d --build frontend
+
+Stop all services and remove volumes (Reset Database)
+docker-compose down -v
+
 
 ## Error Handling
 
@@ -371,9 +161,3 @@ These decisions keep the implementation aligned with requirements and avoid unne
 - Production deployment (AWS, CI/CD)  
 
 ---
-
-## Conclusion
-
-This project demonstrates a clean and practical implementation of a multi-tenant SaaS system with proper role separation, tenant isolation, and containerized development.  
-The focus is on correctness, clarity, and maintainability rather than over-engineering.
-
