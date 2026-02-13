@@ -15,7 +15,7 @@ This application implements a **multi-tenant SaaS architecture**, where:
 
 All data is strictly isolated by tenant.
 
-## 🚀 Quick Start (One-Command Deployment)
+## Quick Start (One-Command Deployment)
 
 Per the submission requirements, this application is fully dockerized and requires **Docker Desktop** to run.
 
