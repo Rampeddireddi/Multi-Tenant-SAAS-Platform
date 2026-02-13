@@ -119,8 +119,9 @@ multi-tenant-saas/
 If you need to rebuild the containers after making code changes:
 
 Rebuild only the backend
+```
 docker-compose up -d --build backend
-
+```
 Rebuild only the frontend
 docker-compose up -d --build frontend
 
